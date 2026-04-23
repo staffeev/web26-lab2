@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import datetime
+from datetime import datetime
 import re
 
 app = FastAPI()
@@ -47,11 +47,11 @@ def get_date(date: str):
             media_type="application/json"
         )
     return JSONResponse(
-        content={"error": "wrong date"},
-        status_code=404)
+        content={"error": "not current date"},
+        status_code=400)
 
 @app.get("/api/rv/{text}")
 def reverse_text(text: str):
     if not re.fullmatch(r"[a-z]+", text):
-        return JSONResponse({"error": "invalid input"}, status_code=400)
+        return JSONResponse({"error": "invalid input format"}, status_code=400)
     return {"result": text[::-1]}

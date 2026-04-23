@@ -47,8 +47,8 @@ def get_date(date: str):
             media_type="application/json"
         )
 
-@app.get("/api/rv/{text}")
-def reverse_text(text: str):
-    if not re.fullmatch(r"[a-z]+", text):
-        return JSONResponse({"error": "invalid input format"}, status_code=400)
-    return {"result": text[::-1]}
+# @app.get("/api/rv/{text}")
+# def reverse_text(text: str):
+#     if not re.fullmatch(r"[a-z]+", text):
+#         return JSONResponse({"error": "invalid input format"}, status_code=400)
+#     return {"result": text[::-1]}

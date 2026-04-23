@@ -48,7 +48,7 @@ def get_date(date: str):
             media_type="application/json"
         )
     return JSONResponse(
-        content={"error": "not current date"},
+        content={"error": f"not current date {date_formatted}"},
         status_code=400)
 
 @app.get("/api/rv/{text}")

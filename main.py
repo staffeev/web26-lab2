@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Path
 from datetime import datetime
-from zoneinfo import ZoneInfo
 import re
 
 app = FastAPI()
@@ -37,7 +37,7 @@ async def result4(request: Request):
     )
 
 @app.get("/{date}")
-def get_date(date: str):
+def get_date(date: str = Path(..., pattern=r"^\d{6}$")):
     dt = datetime.strptime(date, "%d%m%y")
     return JSONResponse(
             content={
@@ -48,7 +48,5 @@ def get_date(date: str):
         )
 
 @app.get("/api/rv/{text}")
-def reverse_text(text: str):
-    if not re.fullmatch(r"[a-z]+", text):
-        return JSONResponse({"error": "invalid input format"}, status_code=400)
+def reverse_text(text: str = Path(..., pattern=r"^[a-z]+$")):
     return JSONResponse(content=text[::-1])

@@ -38,6 +38,7 @@ async def result4(request: Request):
 @app.get("/{date}")
 def get_date(date: str):
     date_formatted = datetime.now().strftime("%d%m%y")
+    print(date_formatted)
     if date == date_formatted:
         return JSONResponse(
             content={

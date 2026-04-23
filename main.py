@@ -38,18 +38,18 @@ async def result4(request: Request):
 
 @app.get("/{date}")
 def get_date(date: str):
-    date_formatted = datetime.now(ZoneInfo("Europe/Moscow")).strftime("%d%m%y")
-    print(date_formatted)
+    today_date = datetime.now(ZoneInfo("Europe/Moscow"))
+    date_formatted = today_date.strftime("%d%m%y")
     if date == date_formatted:
         return JSONResponse(
             content={
-                "date": datetime.now().strftime("%d-%m-%Y"),
+                "date": today_date.strftime("%d-%m-%Y"),
                 "login": "staffeev409626"
             },
             media_type="application/json"
         )
     return JSONResponse(
-        content={"error": f"not current date {date_formatted}"},
+        content={"error": f"not current date"},
         status_code=400)
 
 @app.get("/api/rv/{text}")

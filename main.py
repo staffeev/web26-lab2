@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import re
 
 app = FastAPI()
@@ -37,7 +38,7 @@ async def result4(request: Request):
 
 @app.get("/{date}")
 def get_date(date: str):
-    date_formatted = datetime.now().strftime("%d%m%y")
+    date_formatted = datetime.now(ZoneInfo("Europe/Moscow")).strftime("%d%m%y")
     print(date_formatted)
     if date == date_formatted:
         return JSONResponse(

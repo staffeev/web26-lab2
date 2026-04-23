@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+import datetime
+import re
 
 app = FastAPI()
 
@@ -32,3 +34,24 @@ async def result4(request: Request):
             "Access-Control-Allow-Headers": "x-test,ngrok-skip-browser-warning,Content-Type,Accept,Access-Control-Allow-Headers"
         }
     )
+
+@app.get("/{date}")
+def get_date(date: str):
+    date_formatted = datetime.now().strftime("%d%m%y")
+    if date == date_formatted:
+        return JSONResponse(
+            content={
+                "date": datetime.now().strftime("%d-%m-%Y"),
+                "login": "staffeev409626"
+            },
+            media_type="application/json"
+        )
+    return JSONResponse(
+        content={"error": "wrong date"},
+        status_code=404)
+
+@app.get("/api/rv/{text}")
+def reverse_text(text: str):
+    if not re.fullmatch(r"[a-z]+", text):
+        return JSONResponse({"error": "invalid input"}, status_code=400)
+    return {"result": text[::-1]}

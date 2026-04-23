@@ -38,26 +38,14 @@ async def result4(request: Request):
 
 @app.get("/{date}")
 def get_date(date: str):
-    today_date = datetime.now(ZoneInfo("Europe/Moscow"))
+    dt = datetime.strptime(date, "%d%m%y")
     return JSONResponse(
             content={
-                "date": today_date.strftime("%d-%m-%Y"),
+                "date": dt.strftime("%d-%m-%Y"),
                 "login": "staffeev409626"
             },
             media_type="application/json"
         )
-    # date_formatted = today_date.strftime("%d%m%y")
-    # if date == date_formatted:
-    #     return JSONResponse(
-    #         content={
-    #             "date": today_date.strftime("%d-%m-%Y"),
-    #             "login": "staffeev409626"
-    #         },
-    #         media_type="application/json"
-    #     )
-    # return JSONResponse(
-    #     content={"error": f"not current date"},
-    #     status_code=400)
 
 @app.get("/api/rv/{text}")
 def reverse_text(text: str):
